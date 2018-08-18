@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import BookShelf from "./BookShelf";
 
 export default class BookList extends Component {
   render() {
-    const bookshelf = [
-      { name: "Currently Reading", key: "currentlyReading" },
-      { name: "Want to Read", key: "wantToRead" },
-      { name: "Read", key: "read" }
-    ];
-
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -17,7 +11,25 @@ export default class BookList extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <h2>Bookshelves go here!</h2>
+            <BookShelf
+              title="Currently Reading"
+              books={this.props.books.filter(
+                book => book.shelf === "currentlyReading"
+              )}
+              changeShelf={this.props.onChange}
+            />
+            <BookShelf
+              title="Want to Read"
+              books={this.props.books.filter(
+                book => book.shelf === "wantToRead"
+              )}
+              changeShelf={this.props.onChange}
+            />
+            <BookShelf
+              title="Read"
+              books={this.props.books.filter(book => book.shelf === "read")}
+              changeShelf={this.props.onChange}
+            />
           </div>
         </div>
         <div className="open-search">

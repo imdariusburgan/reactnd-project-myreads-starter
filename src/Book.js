@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 export default class Book extends Component {
+  // This function passes a shelf to the onShelfUpdate props function
   switchShelf = e => {
     this.props.onShelfUpdate(e.target.value);
   };

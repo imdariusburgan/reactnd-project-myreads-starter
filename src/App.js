@@ -10,16 +10,15 @@ class BooksApp extends React.Component {
     Books: []
   };
 
-  // This function will get all the books from the API after the DOM renders
+  // This function will run the getAllBooks function after the DOM renders
   componentDidMount() {
     this.getAllBooks();
   }
 
-  // This function gets all of the books from the API
+  // This function gets all of the books from the API and stores them in the state
   getAllBooks = () => {
     BooksAPI.getAll().then(books => {
       this.setState({ Books: books });
-      console.log(this.state.Books);
     });
   };
 

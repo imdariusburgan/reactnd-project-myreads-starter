@@ -5,7 +5,7 @@ import "./App.css";
 import SearchPage from "./SearchPage";
 import BookList from "./BookList";
 
-class BooksApp extends React.Component {
+export default class BooksApp extends React.Component {
   state = {
     Books: []
   };
@@ -60,5 +60,3 @@ class BooksApp extends React.Component {
     );
   }
 }
-
-export default BooksApp;

@@ -12,11 +12,14 @@ export default class SearchPage extends Component {
   // This function stores the search input data on every change and updates the state with the current query
   handleInputChange = e => {
     let query = e.target.value;
+
+    // Stores the current search query
     this.setState(() => {
       return { SearchQuery: query };
     });
-    console.log(`${this.state.SearchQuery}`);
-    // Update books based on new input text
+
+    // Takes the current search query and searches for books based on that query
+    this.searchBooks(query);
   };
 
   // This function sets the shelf of all of the books searched to match the shelves on the first page
@@ -42,22 +45,41 @@ export default class SearchPage extends Component {
     return books;
   };
 
+  // This function shows books based on a search query ('query' parameter)
   searchBooks = query => {
-    if (query.length !== 0) {
+    if (query.length > 0) {
       BooksAPI.search(query).then(books => {
-        if (books.length !== 0) {
-          // Still figuring out what to do here
-
+        if (books.length > 0) {
           // Store all books that have thumbnails
           let booksWithThumbnails = books.filter(book => book.imageLinks);
+          console.log(booksWithThumbnails);
 
           // Store all books that have thumbnails and authors
           let booksWithAuthorsAndThumbnails = booksWithThumbnails.filter(
             book => book.authors
           );
+          console.log(booksWithAuthorsAndThumbnails);
+
+          // Store all books that have thumbnails, authors, and have the correct shelf that matches the front page
+          let booksWithCorrectShelves = this.changeBookshelf(
+            booksWithAuthorsAndThumbnails
+          );
+          console.log(booksWithCorrectShelves);
+
+          this.setState(() => {
+            return { Books: booksWithCorrectShelves };
+          });
+        } else {
+          this.setState({ Books: [], SearchQuery: "" });
         }
       });
     }
+  };
+
+  // This function takes a book and the desired shelf
+  // When used, it will change the shelf of the book
+  addBookToShelf = (book, shelf) => {
+    this.props.onChange(book, shelf);
   };
 
   render() {
@@ -79,13 +101,26 @@ export default class SearchPage extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              value={this.state.query}
+              value={this.state.SearchQuery}
               onChange={this.handleInputChange}
             />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <ol className="books-grid">
+            {this.state.SearchQuery.length > 0 &&
+              this.state.Books.map(book => {
+                return (
+                  <Book
+                    book={book}
+                    key={book.id}
+                    onShelfUpdate={shelf => {
+                      this.addBookToShelf(book, shelf);
+                    }}
+                  />
+                );
+              })}
+          </ol>
         </div>
       </div>
     );

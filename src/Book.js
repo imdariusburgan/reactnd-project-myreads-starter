@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class Book extends Component {
   // This function passes a shelf to the onShelfUpdate props function
@@ -40,3 +41,8 @@ export default class Book extends Component {
     );
   }
 }
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  onShelfUpdate: PropTypes.func.isRequired
+};

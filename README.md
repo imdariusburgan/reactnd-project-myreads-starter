@@ -2,11 +2,20 @@
 
 This project allows you to categorize books based on those you're 'currently reading', 'want to read', and those you've already 'read'.
 
-## How To Run App Locally:
+## How To Run The Development Version Of This App:
 
-- Download or clone this repository
-- Run `npm install` via the terminal on this project to install all dependencies
-- Once the dependencies are done installing, launch the app by running `npm start`
+1. Download or clone this project's repository.
+2. Install all dependencies by running `npm install` in this project's folder via terminal.
+3. Once all dependencies are installed, run `npm start` to start the server.
+4. Then visit `http://localhost:3000`
+
+## How To Run The Production Build Of This App:
+
+1. Download or clone this project's repository.
+2. Install all dependencies by running `npm install` in this project's folder via terminal.
+3. Build the production version by running `npm run build` in this project's folder via terminal.
+4. Start the server by running `serve -s build` in this project's folder via terminal.
+   Then visit `http://localhost:5000`.
 
 ## Resources:
 

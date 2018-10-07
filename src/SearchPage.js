@@ -65,7 +65,7 @@ export default class SearchPage extends Component {
             return { Books: booksWithCorrectShelves };
           });
         } else {
-          this.setState({ Books: [], SearchQuery: "" });
+          this.setState({ Books: [] });
         }
       });
     }

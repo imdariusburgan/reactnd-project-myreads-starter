@@ -60,30 +60,21 @@ export default class BooksApp extends React.Component {
   };
 
   render() {
+    const books = this.state.Books;
     return (
       <div className="app">
         <Route
           path="/"
           exact
           render={() => {
-            return (
-              <BookList
-                books={this.state.Books}
-                onChange={this.updateBookInfo}
-              />
-            );
+            return <BookList books={books} onChange={this.updateBookInfo} />;
           }}
         />
         <Route
           path="/search"
           exact
           render={() => {
-            return (
-              <SearchPage
-                books={this.state.Books}
-                onChange={this.updateBookInfo}
-              />
-            );
+            return <SearchPage books={books} onChange={this.updateBookInfo} />;
           }}
         />
       </div>

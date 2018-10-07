@@ -32,16 +32,13 @@ export default class SearchPage extends Component {
       searchedBook.shelf = "none";
     }
 
-    // Loop through searched books and original books.
-    // Compare the ID of the searched book and original book.
-    // If the IDs match, set the searched book's shelf to match the original shelf.
-    for (let searchedBook of books) {
-      for (let originalBook of allBooks) {
-        if (originalBook.id === searchedBook) {
-          searchedBook.shelf = originalBook.shelf;
-        }
-      }
-    }
+    books.forEach(searchBook => {
+      allBooks.forEach(originalBook => {
+        return searchBook.id === originalBook.id
+          ? (searchBook.shelf = originalBook.shelf)
+          : null;
+      });
+    });
 
     return books;
   };
@@ -53,19 +50,16 @@ export default class SearchPage extends Component {
         if (books.length > 0) {
           // Store all books that have thumbnails
           let booksWithThumbnails = books.filter(book => book.imageLinks);
-          console.log(booksWithThumbnails);
 
           // Store all books that have thumbnails and authors
           let booksWithAuthorsAndThumbnails = booksWithThumbnails.filter(
             book => book.authors
           );
-          console.log(booksWithAuthorsAndThumbnails);
 
           // Store all books that have thumbnails, authors, and have the correct shelf that matches the front page
           let booksWithCorrectShelves = this.changeBookshelf(
             booksWithAuthorsAndThumbnails
           );
-          console.log(booksWithCorrectShelves);
 
           this.setState(() => {
             return { Books: booksWithCorrectShelves };

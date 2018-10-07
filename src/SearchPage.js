@@ -25,22 +25,24 @@ export default class SearchPage extends Component {
 
   // This function sets the shelf of all of the books searched to match the shelves on the first page
   changeBookshelf = books => {
-    let allBooks = this.props.books;
-
     // Loop through searched books with thumbnails and authors and mark their shelves as none
-    for (let searchedBook of books) {
-      searchedBook.shelf = "none";
-    }
+    // for (let searchedBook of books) {
+    //   searchedBook.shelf = "none";
+    // }
+
+    let returnBooks = [];
 
     books.forEach(searchBook => {
-      allBooks.forEach(originalBook => {
-        return searchBook.id === originalBook.id
-          ? (searchBook.shelf = originalBook.shelf)
-          : null;
+      searchBook.shelf = "none";
+      this.props.books.forEach(originalBook => {
+        if (searchBook.id === originalBook.id) {
+          searchBook.shelf = originalBook.shelf;
+        }
       });
+      returnBooks.push(searchBook);
     });
 
-    return books;
+    return returnBooks;
   };
 
   // This function shows books based on a search query ('query' parameter)
@@ -60,10 +62,7 @@ export default class SearchPage extends Component {
           let booksWithCorrectShelves = this.changeBookshelf(
             booksWithAuthorsAndThumbnails
           );
-
-          this.setState(() => {
-            return { Books: booksWithCorrectShelves };
-          });
+          this.setState({ Books: booksWithCorrectShelves });
         } else {
           this.setState({ Books: [] });
         }
@@ -74,6 +73,12 @@ export default class SearchPage extends Component {
   // This function takes a book and the desired shelf
   // When used, it will change the shelf of the book
   addBookToShelf = (book, shelf) => {
+    this.state.Books.map(b => {
+      if (b.id === book.id) {
+        b.shelf = shelf;
+      }
+      return null;
+    });
     this.props.onChange(book, shelf);
   };
 
